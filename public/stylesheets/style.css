@@ -19,3 +19,24 @@ a {
 .logout {
   text-align: right;
 }
+
+input, textarea {
+  outline: none;
+  margin-bottom: 10px;
+}
+input {
+  width: 200px;
+}
+form {
+  text-align: center;
+}
+.delete, .edit {
+  border: none;
+}
+th {
+  min-width: 50px;
+}
+td {
+  text-align: center;
+  padding: 10px;
+}

@@ -10,7 +10,7 @@ const Todo = loader.database.define('todos', {
     allowNull: false,
   },
   userId: {
-    type: Sequelize.UUID,
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   name: {

@@ -1,5 +1,25 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  if user
+    .logout-container
+      a(href="/logout") ログアウト
+    .create-container
+      a(href="/create") 予定を作る
+    h2 予定一覧
+    table(border=1)
+      tr
+        th 予定名
+        th 詳細
+        th 
+        th
+      each todo in todos
+        tr
+          td #{todo.name}
+          td #{todo.detail}
+          td 
+            a(href=`/delete/${todo.todoId}` class="delete") 削除
+          td
+            a(href=`/edit/${todo.todoId}` class="edit") 編集
+  else
+    a(href="/login") ログイン

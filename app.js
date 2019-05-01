@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const uuid = require('uuid');
 
 const session = require('express-session');
 let passport = require('passport');
@@ -29,7 +28,7 @@ passport.use(new GitHubStrategy({
   function (accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
       User.upsert({
-        userId: uuid.v4(),
+        userId: profile.id,
         username: profile.username
       }).then(() => {
         done(null, profile);
