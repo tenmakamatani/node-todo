@@ -5,6 +5,8 @@ const router = express.Router();
 const authenticationEnsurer = require('./authentication-ensurer');
 const Todo = require('../models/todo');
 const uuid = require('uuid');
+const csrf = require('csurf');
+const csrfProtection = csrf({ cookie: true });
 
 /* GET home page. */
 router.get('/', authenticationEnsurer, (req, res, next) => {
@@ -21,11 +23,13 @@ router.get('/', authenticationEnsurer, (req, res, next) => {
   });
 });
 
-router.get('/create', authenticationEnsurer, (req, res, next) => {
-  res.render('create');
+router.get('/create', authenticationEnsurer, csrfProtection, (req, res, next) => {
+  res.render('create', {
+    csrfToken: req.csrfToken(),
+  });
 });
 
-router.post('/create', authenticationEnsurer, (req, res, next) => {
+router.post('/create', authenticationEnsurer, csrfProtection, (req, res, next) => {
   Todo.create({
     todoId: uuid.v4(),
     userId: req.user.id,
@@ -49,7 +53,7 @@ router.get('/delete/:todoId', authenticationEnsurer, (req, res, next) => {
   });
 });
 
-router.get('/edit/:todoId', authenticationEnsurer, (req, res, next) => {
+router.get('/edit/:todoId', authenticationEnsurer, csrfProtection, (req, res, next) => {
   Todo.findOne({
     where: {
       todoId: req.params.todoId,
@@ -57,11 +61,12 @@ router.get('/edit/:todoId', authenticationEnsurer, (req, res, next) => {
   }).then((todo) => {
     res.render('edit', {
       todo: todo,
+      csrfToken: req.csrfToken(),
     });
   });
 });
 
-router.post('/edit/:todoId', authenticationEnsurer, (req, res, next) => {
+router.post('/edit/:todoId', authenticationEnsurer, csrfProtection, (req, res, next) => {
   Todo.findOne({
     where: {
       todoId: req.params.todoId,

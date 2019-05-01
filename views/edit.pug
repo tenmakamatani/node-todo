@@ -3,6 +3,7 @@ extends layout
 block content
   .form-container
     form(action=`/edit/${todo.todoId}` method="POST" autocomplete="off")
+      input(type="hidden" name="_csrf" value!=csrfToken)
       input(type="text" name="name" value=`${todo.name}`)
       br
       textarea(name="detail", cols="30", rows="10") #{todo.detail}

@@ -7,7 +7,7 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 
 const session = require('express-session');
-let passport = require('passport');
+const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 const GITHUB_CLIENT_ID = '11e756de444f74fd55e6';
 const GITHUB_CLIENT_SECRET = '73040d898146db5e223306e59636c15285bf2219';
@@ -79,7 +79,15 @@ app.get('/auth/github',
 app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function (req, res) {
-    res.redirect('/');
+    var loginFrom = req.cookies.loginFrom;
+    if (loginFrom &&
+      !loginFrom.includes('http://') &&
+      !loginFrom.includes('https://')) {
+      res.clearCookie('loginFrom');
+      res.redirect(loginFrom);
+    } else {
+      res.redirect('/');
+    }
 });
 
 // catch 404 and forward to error handler
