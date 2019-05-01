@@ -1,8 +1,21 @@
 body {
+  margin: 0 auto;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+  text-decoration: none;
+  padding: 5px 10px;
+  border: solid 2px lightblue;
+}
+
+.logout-container {
+  width: 100%;
+  text-align: right;
+}
+
+.logout {
+  text-align: right;
 }

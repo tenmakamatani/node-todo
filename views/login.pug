@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  if user
+    .logout-container
+      a(href="/logout" class="logout") ログアウト
+    p 現在#{user.username}でログイン中
+  else
+    a(href="/auth/github") GitHubでログイン
